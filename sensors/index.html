@@ -1,0 +1,36 @@
+<hml>
+<head>
+<title>Accelometer & geolocation</title>
+<script type='text/javascript' src='../libs/jquery.js'></script>
+</head>
+<body>
+
+<div id='block' style='background: pink; width: 20px; height: 20px; position: absolute;'>
+
+<script type='text/javascript'>
+
+function accelometer( event ) {
+    // TODO: Are these correct?
+    var z = event.alpha;
+    var x = event.beta;
+    var y = event.gamma;
+
+   if( Math.abs( x ) > 30 ) {
+       var dx = $('#block').position().top - x;
+       console.log( dx );
+       $('#block').css('top', dx + 'px' );
+   }
+
+   if( Math.abs( y ) > 30 ) {
+	var dy = $('#block').position().left + y;
+       console.log( dy );
+       $('#block').css('left', dy + 'px' );
+   }
+}
+
+window.addEventListener('deviceorientation', accelometer );
+
+</script>
+
+</body>
+</html>
