@@ -15,11 +15,11 @@ function accelometer( event ) {
     var x = event.beta;
     var y = event.gamma;
 
-    var dx = $('#block').position().top;
-    var dy = $('#block').position().left;
-    
     var win = $(window);
     var block = $('#block');
+
+    var dx = block.position().top;
+    var dy = block.position().left;
 
    if( Math.abs( x ) > 30 ) {
        dx = dx - x;
@@ -33,8 +33,8 @@ function accelometer( event ) {
 	if( dy > win.width() - block.width() ) dy = win.width() - block.width();
    }
 
-   $('#block').css('top', dx + 'px' );
-   $('#block').css('left', dy + 'px' );
+   block.css('top', dx + 'px' );
+   block.css('left', dy + 'px' );
 
 }
 
