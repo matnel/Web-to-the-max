@@ -15,17 +15,20 @@ function accelometer( event ) {
     var x = event.beta;
     var y = event.gamma;
 
+    var dx = $('#block').position().top;
+    var dy = $('#block').position().left;
+
    if( Math.abs( x ) > 30 ) {
-       var dx = $('#block').position().top - x;
-       console.log( dx );
-       $('#block').css('top', dx + 'px' );
+       dx = dx - x;
    }
 
    if( Math.abs( y ) > 30 ) {
-	var dy = $('#block').position().left + y;
-       console.log( dy );
-       $('#block').css('left', dy + 'px' );
+	dy = dy + y;
    }
+
+   $('#block').css('top', dx + 'px' );
+   $('#block').css('left', dy + 'px' );
+
 }
 
 window.addEventListener('deviceorientation', accelometer );
