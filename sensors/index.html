@@ -17,13 +17,20 @@ function accelometer( event ) {
 
     var dx = $('#block').position().top;
     var dy = $('#block').position().left;
+    
+    var win = $(window);
+    var block = $('#block');
 
    if( Math.abs( x ) > 30 ) {
        dx = dx - x;
+       if( dx < 0 ) dx = 0;
+       if( dx > win.height() - block.height() ) dx = win.height() - block.height();
    }
 
    if( Math.abs( y ) > 30 ) {
 	dy = dy + y;
+	if( dy < 0 ) dy = 0;
+	if( dy > win.width() - block.width() ) dy = win.width() - block.width();
    }
 
    $('#block').css('top', dx + 'px' );
