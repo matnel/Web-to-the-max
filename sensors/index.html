@@ -5,7 +5,7 @@
 </head>
 <body>
 
-<div id='block' style='background: pink; width: 20px; height: 20px; position: absolute;'>
+<div id='block' style='background: pink; width: 20px; height: 20px; position: absolute; display: none;'>
 
 <script type='text/javascript'>
 
@@ -38,7 +38,25 @@ function accelometer( event ) {
 
 }
 
-window.addEventListener('deviceorientation', accelometer );
+$().ready( function() {
+
+   console.log('jee');
+   if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(location, noLocation);
+   } else {
+      noLocation();
+   }
+
+} );
+
+function noLocation(a) {
+   $('block').show();
+   window.addEventListener('deviceorientation', accelometer );
+}
+
+function location( data ) {
+  kissa = data;
+}
 
 </script>
 
