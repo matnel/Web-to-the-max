@@ -50,12 +50,21 @@ $().ready( function() {
 } );
 
 function noLocation(a) {
-   $('block').show();
+   $('#block').show();
    window.addEventListener('deviceorientation', accelometer );
 }
 
 function location( data ) {
-  kissa = data;
+  var lat = data.coords.latitude;
+  var long = data.coords.longitude;
+  lat = Math.abs( lat );
+  long = Math.abs( long );
+  // scale lat/long
+  lat = lat / 90 * $(window).height();
+  long = long / 180 * $(window).width();
+  $('#block').css( { 'left': long + 'px', 'top': lat + 'px' } ); 
+  $('#block').show();
+  window.addEventListener('deviceorientation', accelometer );
 }
 
 </script>
