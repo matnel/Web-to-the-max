@@ -5,7 +5,16 @@
 </head>
 <body>
 
-<div id='block' style='background: pink; width: 20px; height: 20px; position: absolute; display: none;'>
+<style>
+  .target {
+     background: red;
+     width: 20px;
+     height: 20px;
+     position: absolute;
+   }
+</style>
+
+<div id='block' style='background: pink; width: 20px; height: 20px; position: absolute; display: none;'></div>
 
 <script type='text/javascript'>
 
@@ -46,6 +55,12 @@ $().ready( function() {
       noLocation();
    }
 
+   setInterval( checkCollision, 100 );
+
+   for( var i = 0; i < 10; i++ ) {
+       addTarget();
+   }
+
 } );
 
 function noLocation(a) {
@@ -65,6 +80,31 @@ function location( data ) {
   $('#block').css( { 'left': lng + 'px', 'top': lat + 'px' } ); 
   $('#block').show();
   window.addEventListener('deviceorientation', accelometer );
+}
+
+function checkCollision() {
+
+   var me = $('#block');
+
+   $.each( $('.target') , function( i , o ) {
+	o = $(o);
+        if( Math.abs( me.position().top - o.position().top ) < 20 ) {
+		if( Math.abs( me.position().left - o.position().left ) < 20 ) {
+			o.removeClass('target');
+			o.fadeOut();
+			addTarget();
+		}
+        }
+   } );
+}
+
+function addTarget() {
+	var win = $(window);
+	var t = $('<div>', { class: 'target', css : 'display: none;' } );
+	t.css( 'top' , Math.random() * win.height() + 'px' );
+	t.css( 'left' , Math.random() * win.width() + 'px' );
+	$('body').append( t );
+	t.fadeIn();
 }
 
 </script>
