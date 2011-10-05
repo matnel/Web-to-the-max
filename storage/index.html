@@ -5,13 +5,42 @@
 </head>
 <body>
 
-<div id='block' style='background: pink; width: 20px; height: 20px; position: absolute; display: none;'>
+<ul id='tasks'>
+</ul>
+
+<input id='task-input' type='text'></input> <button id='task-input-button'>Store</button>
 
 <script type='text/javascript'>
 
 $().ready( function() {
 
     tasks.init();
+
+    $.each( tasks.all() , function( index, value ) {
+	var li = $('<li>', { class : 'task-item' } );
+        li.html( value );
+	$('#tasks').append( li );
+    } );
+
+    $('.task-item').bind( 'click', function() {
+         var value = $(this).html();
+         tasks.remove( value );
+         $(this).remove();
+    } );
+
+   $('#task-input-button').click( function() {
+	var value = $('#task-input').val();
+        tasks.add( value );
+	var li = $('<li>', { class : 'task-item' } );
+        li.html( value );
+        $('#tasks').append( li );
+        li.bind( 'click', function() {
+            var value = $(this).html();
+            tasks.remove( value );
+            $(this).remove();
+        } );
+	$('#task-input').val('');
+   } );
 
 } );
 
