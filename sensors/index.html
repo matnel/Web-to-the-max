@@ -40,7 +40,6 @@ function accelometer( event ) {
 
 $().ready( function() {
 
-   console.log('jee');
    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(location, noLocation);
    } else {
@@ -55,16 +54,10 @@ function noLocation(a) {
 }
 
 function location( data ) {
-
-  console.log('jeejee');
-
   var lat = data.coords.latitude;
   var lng = data.coords.longitude;
   lat = Math.abs( lat );
   lng = Math.abs( lng );
-
-  console.log( lat );
-  console.log( lng );
  
   // scale lat/long
   lat = lat / 90 * $(window).height();
