@@ -1,0 +1,86 @@
+<hml>
+<head>
+<title>Local storage</title>
+<script type='text/javascript' src='../libs/jquery.js'></script>
+</head>
+<body>
+
+<div id='block' style='background: pink; width: 20px; height: 20px; position: absolute; display: none;'>
+
+<script type='text/javascript'>
+
+$().ready( function() {
+
+    tasks.init();
+
+} );
+
+// extend the local storage to offer easy storing for javascript objects
+Storage.prototype.setObject = function( key, object ) {
+   this.setItem( key, JSON.stringify( object ) );
+}
+
+Storage.prototype.getObject = function( key ) {
+   return this.getItem( key ) && JSON.parse( this.getItem( key ) );
+}
+
+var tasks = {
+
+   _key : 'tasks',
+   _storage : null,
+
+   init : function() {
+
+       this._storage = window.localStorage;
+
+       // if there's no storage, create a new stotage place
+       if( ! this._storage.getItem( this._key ) ) {
+           this._storage.setObject( this._key , { data : [] } );
+       }
+   } ,
+
+   reset : function() {
+   	this._storage.removeItem( this._key );
+        this.init();  
+   } ,
+
+   _get : function() {
+       return this._storage.getObject( this._key );
+   } ,
+
+   _store : function( data ) {
+        this._storage.setObject( this._key, data );
+   } ,
+
+   add : function( data ) {
+      var o = this._get();
+      o.data.push( data );
+      this._store( o );
+   } ,
+
+   all : function() {
+      var o = this._get();
+      return o.data;
+  } ,
+
+   remove : function( data ) {
+     var o = this._get();
+     var index = o.data.indexOf( data );
+     if( index >= 0 ) {
+         o.data.splice( index , 1 );
+         this._store( o );
+     }
+   } ,
+
+   has : function( data ) {
+       var o = this._get();
+       return o.data.indexOf( data ) >= 0;
+   }
+
+}
+
+
+</script>
+
+</body>
+</html>
